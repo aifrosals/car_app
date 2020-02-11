@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -6,10 +8,47 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  void checkinfo(String email, String password) async {
+    try
+    {
+
+    //  var url=urldomain.domain+"login";
+      final response=await http.get("http://www.cybermeteors.com/assets/api/index.php?f=login"+"&email="+email+"&password="+password);
+      print('Response body:${response.body}');
+      var jsonResponse=json.decode(response.body);
+      // print("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj"+_fullname.text);
+//print(url+"&f_name+="+_fullname.text+"&phone+="+_number.text+"&email+="+_email.text+"&password+="+_password.text);
+
+      var requestresponse=jsonResponse['response'];
+      // var name=jsonResponse['name'];
+
+      if (requestresponse=="success")
+      {
+        var type = jsonResponse['Type'];
+        print(type);
+      }
+      else if(requestresponse=="error")
+      {
+        print("error login");
+      }
+
+
+    }
+    catch(e)
+    {
+      print("Exception on way $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _passwordController = TextEditingController();
+
 
     return Scaffold(
       body: Container(
@@ -37,6 +76,7 @@ class _LoginState extends State<Login> {
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20),
                         child: TextFormField(
+                          controller: _emailController,
                           decoration: new InputDecoration(
                             prefixIcon: Icon(Icons.account_box),
                             labelText: "Enter Email",
@@ -66,9 +106,10 @@ class _LoginState extends State<Login> {
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20),
                         child: TextFormField(
+                          controller: _passwordController,
                           decoration: new InputDecoration(
                             prefixIcon: Icon(Icons.vpn_key),
-                            labelText: "Enter Email",
+                            labelText: "Enter Password",
                             fillColor: Colors.white,
                             border: new OutlineInputBorder(
                               borderRadius: new BorderRadius.circular(25.0),
@@ -95,7 +136,9 @@ class _LoginState extends State<Login> {
                       Material(
                         child: InkWell(
                           borderRadius: BorderRadius.circular(20),
-                          onTap: () {},
+                          onTap: () {
+                            checkinfo(_emailController.text, _passwordController.text);
+                          },
                           splashColor: Colors.purple,
                           highlightColor: Colors.blue,
                           child: Container(

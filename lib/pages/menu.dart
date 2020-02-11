@@ -82,7 +82,10 @@ class _MenuState extends State<Menu> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Icon(Icons.add,color: Colors.white,)
+                              Icon(Icons.directions_car,color: Colors.white,
+                                size: height / 12,
+                              ),
+                              Text('Add Car', style:TextStyle(color: Colors.white),)
                             ],
                           ),
                         ),
@@ -105,14 +108,111 @@ class _MenuState extends State<Menu> {
                               bottomRight:  Radius.circular(40),
 
                             ),
-                          )
+                          ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(Icons.directions_car,color: Colors.white,
+                                    size: height / 16,
+                                  ),
+                                  Icon(Icons.build,color: Colors.white,
+                                    size: height / 18,
+                                  ),
+                                ],
+                              ),
+                              Text('Manage Car', style:TextStyle(color: Colors.white),)
+                            ],
+                          ),
+                        ),
+
                       ),
                     ),
                   ),
                 ],
               ),
             ),
+            SizedBox(height: height * 0.03,),
+            Container(
+              // color: Colors.purple,
+              height: height * 0.28,
+              width: width * 0.85,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 100,
+                    child: Container(
+                      height: height * 20,
+                      child: Card(
+                        color: Colors.purple,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft:  Radius.circular(40),
+                            bottomLeft:  Radius.circular(40),
+                          ),
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.account_circle,color: Colors.white,
+                                size: height / 12,
+                              ),
+                              Text('Add User', style:TextStyle(color: Colors.white),)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(),
+                  ),
+                  Expanded(
+                    flex: 100,
+                    child: Container(
+                      height: height * 20,
+                      child: Card(
+                        color: Colors.purple,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topRight:  Radius.circular(40),
+                            bottomRight:  Radius.circular(40),
 
+                          ),
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(Icons.account_circle,color: Colors.white,
+                                    size: height / 16,
+                                  ),
+                                  Icon(Icons.build,color: Colors.white,
+                                    size: height / 18,
+                                  ),
+                                ],
+                              ),
+                              Text('Manage User', style:TextStyle(color: Colors.white),)
+                            ],
+                          ),
+                        ),
+
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

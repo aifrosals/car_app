@@ -1,3 +1,5 @@
+import 'package:car_app/pages/addCar.dart';
+import 'package:car_app/pages/add_user.dart';
 import 'package:car_app/pages/login.dart';
 import 'package:car_app/pages/menu.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Menu(),
+      home: AddUser(),
       //MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
