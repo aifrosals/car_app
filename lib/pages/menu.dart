@@ -1,5 +1,12 @@
+import 'package:car_app/pages/add_car.dart';
+import 'package:car_app/pages/add_user.dart';
+import 'package:car_app/pages/car_list.dart';
+import 'package:car_app/pages/find_car.dart';
+import 'package:car_app/pages/login.dart';
+import 'package:car_app/pages/user_list.dart';
 import 'package:car_app/theme/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Menu extends StatefulWidget {
   @override
@@ -20,7 +27,10 @@ class _MenuState extends State<Menu> {
         iconTheme: IconThemeData(color: Colors.orange),
         centerTitle: true,
         actions: <Widget>[
-          Icon(Icons.exit_to_app)
+          IconButton(icon: Icon(Icons.exit_to_app,color: Colors.orange,), onPressed: (){
+            _deletePrefsOnLogOut();
+          },tooltip: 'Log Out',)
+
         ],
       ),
       drawer: Drawer(
@@ -32,25 +42,65 @@ class _MenuState extends State<Menu> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text('Drawer Header'),
+              child: Center(child: Text('Admin Pannel', style: TextStyle(color: Colors.white),)),
               decoration: BoxDecoration(
                 color: Colors.purple,
               ),
             ),
             ListTile(
-              title: Text('Item 1'),
+              title: Text('Add User'),
               onTap: () {
-                // Update the state of the app.
-                // ...
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddUser())
+                );
               },
             ),
             ListTile(
-              title: Text('Item 2'),
+              title: Text('Add Car'),
               onTap: () {
-                // Update the state of the app.
-                // ...
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddCar())
+                );
               },
             ),
+            ListTile(
+              title: Text('Manage Users'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UserList())
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Manage Cars'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CarList())
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Manage Car Parking'),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FindCar())
+                );
+              },
+            ),
+
+            ListTile(
+              title: Text('Log Out'),
+              onTap: () {
+                _deletePrefsOnLogOut();
+              },
+            ),
+
+
           ],
         ),
       ),
@@ -59,7 +109,7 @@ class _MenuState extends State<Menu> {
         width: width,
         child: Column(
           children: <Widget>[
-            SizedBox(height: height * 0.20,),
+            SizedBox(height: height * 0.17,),
             Container(
              // color: Colors.purple,
               height: height * 0.28,
@@ -78,15 +128,23 @@ class _MenuState extends State<Menu> {
                               bottomLeft:  Radius.circular(40),
                             ),
                           ),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.directions_car,color: Colors.white,
-                                size: height / 12,
-                              ),
-                              Text('Add Car', style:TextStyle(color: Colors.white),)
-                            ],
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => AddCar())
+                            );
+                          },
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(Icons.directions_car,color: Colors.white,
+                                  size: height / 12,
+                                ),
+                                Text('Add Car', style:TextStyle(color: Colors.white),)
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -109,24 +167,33 @@ class _MenuState extends State<Menu> {
 
                             ),
                           ),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(Icons.directions_car,color: Colors.white,
-                                    size: height / 16,
-                                  ),
-                                  Icon(Icons.build,color: Colors.white,
-                                    size: height / 18,
-                                  ),
-                                ],
-                              ),
-                              Text('Manage Car', style:TextStyle(color: Colors.white),)
-                            ],
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => CarList())
+                            );
+
+                          },
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(Icons.directions_car,color: Colors.white,
+                                      size: height / 16,
+                                    ),
+                                    Icon(Icons.build,color: Colors.white,
+                                      size: height / 18,
+                                    ),
+                                  ],
+                                ),
+                                Text('Manage Car', style:TextStyle(color: Colors.white),)
+                              ],
+                            ),
                           ),
                         ),
 
@@ -155,15 +222,23 @@ class _MenuState extends State<Menu> {
                             bottomLeft:  Radius.circular(40),
                           ),
                         ),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.account_circle,color: Colors.white,
-                                size: height / 12,
-                              ),
-                              Text('Add User', style:TextStyle(color: Colors.white),)
-                            ],
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => AddUser())
+                            );
+                          },
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(Icons.account_circle,color: Colors.white,
+                                  size: height / 12,
+                                ),
+                                Text('Add User', style:TextStyle(color: Colors.white),)
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -186,27 +261,35 @@ class _MenuState extends State<Menu> {
 
                           ),
                         ),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(Icons.account_circle,color: Colors.white,
-                                    size: height / 16,
-                                  ),
-                                  Icon(Icons.build,color: Colors.white,
-                                    size: height / 18,
-                                  ),
-                                ],
-                              ),
-                              Text('Manage User', style:TextStyle(color: Colors.white),)
-                            ],
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => UserList())
+                            );
+
+                          },
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(Icons.account_circle,color: Colors.white,
+                                      size: height / 16,
+                                    ),
+                                    Icon(Icons.build,color: Colors.white,
+                                      size: height / 18,
+                                    ),
+                                  ],
+                                ),
+                                Text('Manage User', style:TextStyle(color: Colors.white),)
+                              ],
+                            ),
                           ),
                         ),
-
                       ),
                     ),
                   ),
@@ -217,5 +300,11 @@ class _MenuState extends State<Menu> {
         ),
       ),
     );
+  }
+  void _deletePrefsOnLogOut () async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('type');
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (BuildContext ctx) => Login()));
   }
 }

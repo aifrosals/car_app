@@ -1,8 +1,16 @@
-import 'package:car_app/pages/addCar.dart';
+import 'package:car_app/models/car.dart';
+import 'package:car_app/models/user.dart';
+import 'package:car_app/pages/add_car.dart';
 import 'package:car_app/pages/add_user.dart';
+import 'package:car_app/pages/car_list.dart';
+import 'package:car_app/pages/car_park.dart';
+import 'package:car_app/pages/find_car.dart';
 import 'package:car_app/pages/login.dart';
+import 'package:car_app/pages/manage_car.dart';
 import 'package:car_app/pages/menu.dart';
+import 'package:car_app/pages/user_list.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Car',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -22,9 +30,9 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
-      home: AddUser(),
+      home: MyHomePage(title: 'car',),
       //MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -32,7 +40,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -49,6 +56,50 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+
+
+  Future<Null> checkIsLogin() async {
+
+    String _type = "";
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+
+    _type = prefs.getString("type");
+
+    print(_type);
+
+     if (_type != "" && _type != null) {
+      print("alreay login.");
+      if(_type == 'user'){
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => FindCar()),
+        );
+      }
+      else if(_type == 'admin'){
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Menu()),
+        );
+      }
+    else {
+      print('the type is $_type');
+      }
+
+    }
+    else
+    {
+      //  replace it with the login page
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Login()),
+      );
+
+    }
+
+  }
+
   int _counter = 0;
 
   void _incrementCounter() {
@@ -61,7 +112,12 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkIsLogin();
+  }
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -71,46 +127,11 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
       body: Center(
+         child: CircularProgressIndicator(),
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

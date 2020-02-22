@@ -1,56 +1,54 @@
-import 'dart:convert';
 import 'package:car_app/config/api.dart';
 import 'package:car_app/theme/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class AddUser extends StatefulWidget {
+
+class AddCar extends StatefulWidget {
   @override
-  _AddUserState createState() => _AddUserState();
+  _AddCarState createState() => _AddCarState();
 }
 
-class _AddUserState extends State<AddUser> {
+class _AddCarState extends State<AddCar> {
 String rep;
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _emailController = TextEditingController();
+  TextEditingController _carHolderNameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _carPlateController = TextEditingController();
+  TextEditingController _carParkingLimitController = TextEditingController();
 
-  Future<String> addUser (String email, String number, String password) async {
+  Future<String> addCar (String name, String number, String plate, String parkingLimit) async {
     try
     {
-      final response=await http.get(Url.domainUrl+"registration"+"&email="+email+"&phone="+number+"&password="+password);
-      print(Url.domainUrl+"registeration"+"&email="+email+"&phone="+number+"&password="+password);
+      final response=await http.get(Url.domainUrl+"add_info"+"&name="+name+"&number="+number+"&plate="+plate+"&parking_limit="+parkingLimit);
+      print(Url.domainUrl+"add_info"+"&name="+name+"&number="+number+"&plate="+plate+"&parking_limit="+parkingLimit);
       print('Response body:${response.body}');
-
       if (response.body=="success")
       {
         print('sucess es');
-        print('bog mango');
         return 'success';
       }
-      else if(response.body=="already present")
+      else if(response.body=="error")
       {
         print("error login");
         return 'error';
       }
-      else if(response.body == "Failed"){
-        print("failed");
-        return 'error';
-      }
+      return 'error';
+
     }
     catch(e)
     {
-      print("Exception on addUser $e");
+      print("Exception on addCar $e");
       return 'error';
+
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Add User', style: CustomStyles.orangeTextStyle,),
+      appBar: AppBar(title: Text('Add Car', style: CustomStyles.orangeTextStyle,),
         backgroundColor: Colors.white12,
         elevation: 0.0,
         iconTheme: IconThemeData(color: Colors.orange),
@@ -66,10 +64,10 @@ String rep;
               Padding(
                 padding: const EdgeInsets.only(left: 20.0, right: 20),
                 child: TextFormField(
-                  controller: _emailController,
+                  controller: _carHolderNameController,
                   decoration: new InputDecoration(
                     prefixIcon: Icon(Icons.account_box),
-                    labelText: "Enter Email",
+                    labelText: "Enter Name of Car Holder",
                     fillColor: Colors.white,
                     border: new OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(25.0),
@@ -79,7 +77,7 @@ String rep;
                   ),
                   validator: (val) {
                     if (val.length == 0) {
-                      return "Email cannot be empty";
+                      return "Name cannot be empty";
                     } else {
                       return null;
                     }
@@ -94,39 +92,38 @@ String rep;
               Padding(
                 padding: const EdgeInsets.only(left: 20.0, right: 20),
                 child: TextFormField(
-                  keyboardType: TextInputType.phone,
                   controller: _phoneController,
                   decoration: new InputDecoration(
                     prefixIcon: Icon(Icons.phone),
-                    labelText: "Enter Phone Number",
+                    labelText: "Enter Phone",
                     fillColor: Colors.white,
                     border: new OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(25.0),
                       borderSide: new BorderSide(),
                     ), //fillColor: Colors.green
                   ),
-
                   validator: (val) {
                     if (val.length == 0) {
-                      return "Phone number cannot be empty";
+                      return "phone number cannot be empty";
                     } else {
                       return null;
                     }
                   },
+                  keyboardType: TextInputType.phone,
                   style: new TextStyle(
                     fontFamily: "Poppins",
                   ),
                 ),
               ),
               SizedBox(height: 10,),
+
               Padding(
                 padding: const EdgeInsets.only(left: 20.0, right: 20),
                 child: TextFormField(
-                  obscureText: true,
-                  controller: _passwordController,
+                  controller: _carPlateController,
                   decoration: new InputDecoration(
-                    prefixIcon: Icon(Icons.vpn_key),
-                    labelText: "Enter password",
+                    prefixIcon: Icon(Icons.featured_play_list),
+                    labelText: "Enter Plate Number",
                     fillColor: Colors.white,
                     border: new OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(25.0),
@@ -136,7 +133,7 @@ String rep;
                   ),
                   validator: (val) {
                     if (val.length == 0) {
-                      return "password cannot be empty";
+                      return "Plate number cannot be empty";
                     } else {
                       return null;
                     }
@@ -148,26 +145,55 @@ String rep;
                 ),
               ),
               SizedBox(height: 10,),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
+                child: TextFormField(
+                  controller: _carParkingLimitController,
+                  decoration: new InputDecoration(
+                    prefixIcon: Icon(Icons.access_time),
+                    labelText: "Enter Parking limit",
+                    fillColor: Colors.white,
+                    border: new OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(25.0),
+                      borderSide: new BorderSide(),
+                    ),
+                    //fillColor: Colors.green
+                  ),
+                  validator: (val) {
+                    if (val.length == 0) {
+                      return "Parking Limit cannot be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                  keyboardType: TextInputType.number,
+                  style: new TextStyle(
+                    fontFamily: "Poppins",
+                  ),
+                ),
+              ),
+            SizedBox(height: 10,),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Material(
                   child: InkWell(
                     borderRadius: BorderRadius.circular(20),
-                    onTap: () async {
+                    onTap: () async{
                       if(_formKey.currentState.validate()){
-                       rep = await addUser(_emailController.text, _phoneController.text, _passwordController.text);
-                        print('yes');
-                        if(rep=='success') {
-                          Scaffold.of(context).showSnackBar(SnackBar(content: Text('User added successfully')));
-                          setState(() {
-                            _passwordController.text = "";
-                            _phoneController.text ="";
-                            _emailController.text="";
-                          });
-                        }
-                        else if(rep=='error') {
+                         rep = await addCar(_carHolderNameController.text, _phoneController.text, _carPlateController.text, _carParkingLimitController.text);
+                         if(rep=='success') {
+                           Scaffold.of(context).showSnackBar(SnackBar(content: Text('Car added successfully')));
+                           setState(() {
+                             _carHolderNameController.text = "";
+                             _carPlateController.text ="";
+                             _carParkingLimitController.text="";
+                             _phoneController.text="";
+                           });
+                         }
+                         else if(rep=='error') {
 
-                        }
+                         }
                       }
                     },
                     splashColor: Colors.purple,
@@ -191,10 +217,12 @@ String rep;
                   ),
                 ),
               ),
+
             ],
           ),
         ),
       ),
+
     );
   }
 }
