@@ -7,6 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
+
+  final String loginAS;
+
+  Login({this.loginAS});
+
   @override
   _LoginState createState() => _LoginState();
 }
@@ -76,8 +81,12 @@ class _LoginState extends State<Login> {
         width: width,
         child: ListView(
           children: <Widget>[
-            SizedBox(
+            Container(
               height: height * 0.23,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Text('Login as ${widget.loginAS}', style: TextStyle(color: Colors.white),),
+              ),
             ),
             Container(
               height: height * 0.43,

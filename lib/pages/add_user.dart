@@ -12,22 +12,21 @@ class AddUser extends StatefulWidget {
 class _AddUserState extends State<AddUser> {
 String rep;
   final _formKey = GlobalKey<FormState>();
-
+  TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  Future<String> addUser (String email, String number, String password) async {
+  Future<String> addUser (String email, String number, String password, String name) async {
     try
     {
-      final response=await http.get(Url.domainUrl+"registration"+"&email="+email+"&phone="+number+"&password="+password);
-      print(Url.domainUrl+"registeration"+"&email="+email+"&phone="+number+"&password="+password);
+      final response=await http.get(Url.domainUrl+"registration"+"&email="+email+"&phone="+number+"&password="+password+"&name="+name);
+      print(Url.domainUrl+"registration"+"&email="+email+"&phone="+number+"&password="+password+"&name="+name);
       print('Response body:${response.body}');
 
       if (response.body=="success")
       {
         print('sucess es');
-        print('bog mango');
         return 'success';
       }
       else if(response.body=="already present")
@@ -66,9 +65,36 @@ String rep;
               Padding(
                 padding: const EdgeInsets.only(left: 20.0, right: 20),
                 child: TextFormField(
-                  controller: _emailController,
+                  controller: _nameController,
                   decoration: new InputDecoration(
                     prefixIcon: Icon(Icons.account_box),
+                    labelText: "Enter Name",
+                    fillColor: Colors.white,
+                    border: new OutlineInputBorder(
+                      borderRadius: new BorderRadius.circular(25.0),
+                      borderSide: new BorderSide(),
+                    ),
+                    //fillColor: Colors.green
+                  ),
+                  validator: (val) {
+                    if (val.length == 0) {
+                      return "Name cannot be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                  style: new TextStyle(
+                    fontFamily: "Poppins",
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
+                child: TextFormField(
+                  controller: _emailController,
+                  decoration: new InputDecoration(
+                    prefixIcon: Icon(Icons.contact_mail),
                     labelText: "Enter Email",
                     fillColor: Colors.white,
                     border: new OutlineInputBorder(
@@ -155,7 +181,7 @@ String rep;
                     borderRadius: BorderRadius.circular(20),
                     onTap: () async {
                       if(_formKey.currentState.validate()){
-                       rep = await addUser(_emailController.text, _phoneController.text, _passwordController.text);
+                       rep = await addUser(_emailController.text, _phoneController.text, _passwordController.text, _nameController.text);
                         print('yes');
                         if(rep=='success') {
                           Scaffold.of(context).showSnackBar(SnackBar(content: Text('User added successfully')));

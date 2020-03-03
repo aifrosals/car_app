@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "194009361360",
+    "firebase_url": "https://textrecognition-32b02.firebaseio.com",
+    "project_id": "textrecognition-32b02",
+    "storage_bucket": "textrecognition-32b02.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194009361360:android:4cebd85a5a5d5e81e9e7d5",
+        "android_client_info": {
+          "package_name": "com.cybermeteors.car_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194009361360-1i9t9boaombv8bchdaqapoaqs8arj5c3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4q6EYiyBgukiNIZqxdr6LqravD4BGKII"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194009361360-1i9t9boaombv8bchdaqapoaqs8arj5c3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194009361360:android:7770c55653d8f748e9e7d5",
+        "android_client_info": {
+          "package_name": "com.cybermeteors.text_recognition"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194009361360-1i9t9boaombv8bchdaqapoaqs8arj5c3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4q6EYiyBgukiNIZqxdr6LqravD4BGKII"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194009361360-1i9t9boaombv8bchdaqapoaqs8arj5c3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

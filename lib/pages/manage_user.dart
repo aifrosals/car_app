@@ -20,6 +20,7 @@ class _ManageUserState extends State<ManageUser> {
 
   final _formKey = GlobalKey<FormState>();
 
+  TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -33,10 +34,10 @@ class _ManageUserState extends State<ManageUser> {
     }
   }
 
-  Future<String> editUser (String email, String number, String password) async {
+  Future<String> editUser (String email, String number, String password, String name) async {
     try
     {
-      final response=await http.get(Url.domainUrl+"edit_user"+"&email="+email+"&number="+number+"&password="+password+"&preemail="+tempUser.email);
+      final response=await http.get(Url.domainUrl+"edit_user"+"&email="+email+"&number="+number+"&password="+password+"&preemail="+tempUser.email+"&name="+name);
       print('Response body:${response.body}');
       if (response.body=="success")
       {
@@ -64,6 +65,7 @@ class _ManageUserState extends State<ManageUser> {
     // TODO: implement initState
     super.initState();
     tempUser = widget.user;
+    _nameController.text = tempUser.name;
     _emailController.text = tempUser.email;
     _phoneController.text = tempUser.phone;
     _passwordController.text = tempUser.password;
@@ -91,9 +93,36 @@ class _ManageUserState extends State<ManageUser> {
                 Padding(
                   padding: const EdgeInsets.only(left: 20.0, right: 20),
                   child: TextFormField(
-                    controller: _emailController,
+                    controller: _nameController,
                     decoration: new InputDecoration(
                       prefixIcon: Icon(Icons.account_box),
+                      labelText: "Enter Name",
+                      fillColor: Colors.white,
+                      border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.circular(25.0),
+                        borderSide: new BorderSide(),
+                      ),
+                      //fillColor: Colors.green
+                    ),
+                    validator: (val) {
+                      if (val.length == 0) {
+                        return "Name cannot be empty";
+                      } else {
+                        return null;
+                      }
+                    },
+                    style: new TextStyle(
+                      fontFamily: "Poppins",
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10,),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0, right: 20),
+                  child: TextFormField(
+                    controller: _emailController,
+                    decoration: new InputDecoration(
+                      prefixIcon: Icon(Icons.contact_mail),
                       labelText: "Enter Email",
                       hintText: tempUser.email,
                       fillColor: Colors.white,
@@ -191,13 +220,14 @@ class _ManageUserState extends State<ManageUser> {
                         borderRadius: BorderRadius.circular(20),
                         onTap: () async{
                           if(_formKey.currentState.validate()){
-                           rep = await editUser(_emailController.text, _phoneController.text, _passwordController.text);
+                           rep = await editUser(_emailController.text, _phoneController.text, _passwordController.text,_nameController.text);
                             if(rep=='success')
                               {
                                 setState(() {
                                   tempUser.email = _emailController.text;
                                   tempUser.phone = _phoneController.text;
                                   tempUser.password = _passwordController.text;
+                                  tempUser.name = _nameController.text;
                                   print("name "+tempUser.email);
                                   enabledEdit = false;
                                 },
@@ -345,10 +375,40 @@ class NonEditAble extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20),
           child: TextFormField(
+            initialValue: user.name,
+            enabled: false,
+            decoration: new InputDecoration(
+              prefixIcon: Icon(Icons.contact_mail),
+              labelText: "Enter Name",
+              hintText: "Name",
+              fillColor: Colors.white,
+              border: new OutlineInputBorder(
+                borderRadius: new BorderRadius.circular(25.0),
+                borderSide: new BorderSide(),
+              ),
+              //fillColor: Colors.green
+            ),
+            validator: (val) {
+              if (val.length == 0) {
+                return "Email cannot be empty";
+              } else {
+                return null;
+              }
+            },
+            keyboardType: TextInputType.emailAddress,
+            style: new TextStyle(
+              fontFamily: "Poppins",
+            ),
+          ),
+        ),
+        SizedBox(height: 10,),
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0, right: 20),
+          child: TextFormField(
             initialValue: user.email,
             enabled: false,
             decoration: new InputDecoration(
-              prefixIcon: Icon(Icons.account_box),
+              prefixIcon: Icon(Icons.contact_mail),
               labelText: "Enter Email",
               hintText: "Email",
               fillColor: Colors.white,

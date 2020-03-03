@@ -2,10 +2,12 @@ import 'package:car_app/models/car.dart';
 import 'package:car_app/models/user.dart';
 import 'package:car_app/pages/add_car.dart';
 import 'package:car_app/pages/add_user.dart';
+import 'package:car_app/pages/capture_image.dart';
 import 'package:car_app/pages/car_list.dart';
 import 'package:car_app/pages/car_park.dart';
 import 'package:car_app/pages/find_car.dart';
 import 'package:car_app/pages/login.dart';
+import 'package:car_app/pages/login_as.dart';
 import 'package:car_app/pages/manage_car.dart';
 import 'package:car_app/pages/menu.dart';
 import 'package:car_app/pages/user_list.dart';
@@ -32,8 +34,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.purple,
       ),
-      home: MyHomePage(title: 'car',),
-      //MyHomePage(title: 'Flutter Demo Home Page'),
+      home: UserList(),
+    //  MyHomePage(title: 'Vehicle Park',),
     );
   }
 }
@@ -93,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //  replace it with the login page
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Login()),
+        MaterialPageRoute(builder: (context) => LoginAS()),
       );
 
     }

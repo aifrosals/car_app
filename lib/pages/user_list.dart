@@ -111,14 +111,14 @@ class UserListTile extends StatelessWidget {
             child: Icon(Icons.assignment_ind, color: Colors.white),
           ),
           title: Text(
-            user.email,
+            user.name,
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(user.phone, style: TextStyle(color: Colors.white)),
+              Text(user.email, style: TextStyle(color: Colors.white)),
             ],
           ),
           trailing:
